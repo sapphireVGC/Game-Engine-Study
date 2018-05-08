@@ -16,17 +16,30 @@ void monster::attack() {
 void monster::DisplayStats() {
 	cout << "\n\n\t-------Monster Stats--------";
 	cout << "\n\tName: " << NAME;
-	cout << "\n\tType: " << TYPE;
-	cout << "\n\tAttack: " << ATK;
+	cout << "\n\tHP: " << HP;
+	cout << "\n\tPosition: (" << POS[0] << ", " << POS[1] << ")";
 	cout << "\n\t----------------------------";
 }
 
-int monster::GetATK() {
-	return ATK;
+int monster::GetHP() {
+	return HP;
 }
 
-void monster::SetATK(int x) {
-	ATK = x;
+void monster::SetHP(int x) {
+	HP = x;
+}
+
+int monster::GetPOSx() {
+	return POS[0];
+}
+
+int monster::GetPOSy() {
+	return POS[1];
+}
+
+void monster::SetPOS(int x, int y) {
+	POS[0] = x;
+	POS[1] = y;
 }
 
 string monster::GetMonsterType() {

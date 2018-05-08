@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="grid.cpp" />
     <ClCompile Include="MemoryPool.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="orc.cpp" />
@@ -120,6 +121,7 @@
     <ClCompile Include="zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="grid.h" />
     <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="orc.h" />

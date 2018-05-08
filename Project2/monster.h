@@ -11,14 +11,19 @@ public:
 
 	void attack();
 	void DisplayStats();
-	int GetATK();
-	void SetATK(int x);
+	int GetHP();
+	void SetHP(int x);
+	int GetPOSx();
+	int GetPOSy();
+	void SetPOS(int x, int y);
 	string GetMonsterType();
 	void SetMonsterType(string x);
 	string GetMonsterName();
 	void SetMonsterName(string x);
 
 	int ATK;
+	int HP;
+	int POS[2];
 	string TYPE;
 	string NAME;
 };

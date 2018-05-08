@@ -2,81 +2,76 @@
 #include "orc.h"
 #include "zombie.h"
 #include "player.h"
+#include "grid.h"
+#include <chrono>
+#include <thread>
+#include <iostream>
 
 using namespace std;
 
 orc orcs[100];
-zombie zombies[100];
-player p;
 
-int orcCnt = 0;
-int zombieCnt = 0;
+void SpawnMonster(int i) {
+	int ranHP = 0;
+	ranHP = rand() % 10 + 1;
+
+	int ranPosX = 0;
+	int ranPosY = 0;
+
+	bool checkPos;
+
+	do {
+		ranPosX = rand() % 30;
+		ranPosY = rand() % 30;
+		checkPos = false;
+			
+		for (int ii = 0; ii < i; ii++) {
+			if (ranPosX == orcs[i].GetPOSx()) {
+				if (ranPosY == orcs[i].GetPOSy()) {
+					checkPos = true;
+
+					break;
+				}
+			}
+		}
+	} while (checkPos && i != 0);
+
+	orcs[i].SetMonsterName("Orc" + std::to_string(i));
+	orcs[i].SetHP(ranHP);
+	orcs[i].SetPOS(ranPosX, ranPosY);
+	orcs[i].DisplayStats();
+}
 
 void Update() {
-	int playerHP;
+	for (int i = 0; i < 100; i++) {
+		int hp = orcs[i].GetHP();
+		hp--;
+		orcs[i].SetHP(hp);
+		
+		cout << "\n\n\tOrc" << i << "'s HP is " << hp;
 
-	for (int i = 0; i < orcCnt; i++) {
-		playerHP = p.GetHP();
-		playerHP = playerHP - orcs[i].GetATK();
+		if (hp == 0) {
+			cout << "\n\n\tOrc" << i << " is dead !!!";
+			cout << "\n\tSpawning...";
 
-		if (playerHP < 0) {
-			playerHP == 0;
-			break;
+			SpawnMonster(i);
 		}
-
-		orcs[i].smash();
-		p.SetHP(playerHP);
-		p.DisplayStats();
-	}
-
-	for (int i = 0; i < zombieCnt; i++) {
-		playerHP = p.GetHP();
-		playerHP = playerHP - zombies[i].GetATK();
-
-		if (playerHP < 0) {
-			playerHP == 0;
-			break;
-		}
-
-		zombies[i].bite();
-		p.SetHP(playerHP);
-		p.DisplayStats();
 	}
 }
 
-int main() {	
-	p.SetHP(5000);
-	p.DisplayStats();
-
+int main() {
 	for (int i = 0; i < 100; i++) {
-		int ranType = 0;
-		ranType = rand() % 2;
-
-		int ranAtk = 0;
-
-		if(ranType == 0) {
-			ranAtk = rand() % 51 + 50;
-
-			orcs[orcCnt].SetMonsterType("Orc");
-			orcs[orcCnt].SetMonsterName("Orc" + std::to_string(orcCnt));
-			orcs[orcCnt].SetATK(ranAtk);
-			orcs[orcCnt].DisplayStats();
-
-			orcCnt++;
-		}
-		else {
-			ranAtk = rand() % 26 + 25;
-
-			zombies[zombieCnt].SetMonsterType("Zombie");
-			zombies[zombieCnt].SetMonsterName("Zombie" + std::to_string(zombieCnt));
-			zombies[zombieCnt].SetATK(ranAtk);
-			zombies[zombieCnt].DisplayStats();
-
-			zombieCnt++;
-		}
+		SpawnMonster(i);
+	}
+	
+	std::chrono::seconds interval(10);
+	
+	while (true) {
+		std::this_thread::sleep_for(interval);
+		std::cout << "\n\n\ttick!" << std::flush;
+		Update();
 	}
 
-	Update();
 	getchar();
 
 	return 0;
