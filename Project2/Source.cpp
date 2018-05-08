@@ -11,6 +11,8 @@ using namespace std;
 
 orc orcs[100];
 
+int arrayxy[30][30];
+
 void SpawnMonster(int i) {
 	int ranHP = 0;
 	ranHP = rand() % 10 + 1;
@@ -40,6 +42,28 @@ void SpawnMonster(int i) {
 	orcs[i].SetHP(ranHP);
 	orcs[i].SetPOS(ranPosX, ranPosY);
 	orcs[i].DisplayStats();
+
+	arrayxy[ranPosX][ranPosY] = i;
+}
+
+void PrintGrid() {
+	cout << "\n\nGrid\n" << endl;
+
+	for (int i = 0; i < 30; ++i)
+	{
+		for (int j = 0; j < 30; ++j)
+		{
+			if (arrayxy[i][j] == 0)
+				cout << "--  ";
+			else if (arrayxy[i][j] < 10)
+				cout << "0" << arrayxy[i][j] << "  ";
+			else
+				cout << arrayxy[i][j] << "  ";
+		}
+		cout << '\n';
+	}
+
+	cout << endl;
 }
 
 void Update() {
@@ -53,17 +77,31 @@ void Update() {
 		if (hp == 0) {
 			cout << "\n\n\tOrc" << i << " is dead !!!";
 			cout << "\n\tSpawning...";
+			
+			arrayxy[orcs[i].GetPOSx()][orcs[i].GetPOSy()] = 0;
 
 			SpawnMonster(i);
 		}
 	}
+
+	PrintGrid();
 }
 
 int main() {
+	for (int i = 0; i < 30; ++i)
+	{
+		for (int j = 0; j < 30; ++j)
+		{
+			arrayxy[i][j] = 0;
+		}
+	}
+
 	for (int i = 0; i < 100; i++) {
 		SpawnMonster(i);
 	}
-	
+
+	PrintGrid();
+
 	std::chrono::seconds interval(10);
 	
 	while (true) {
