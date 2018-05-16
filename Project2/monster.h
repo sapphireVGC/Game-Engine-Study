@@ -4,26 +4,26 @@
 
 using namespace std;
 
-class monster {
+class monster final {
 public:
 	monster();
 	~monster();
 
-	void attack();
 	void DisplayStats();
+
 	int GetHP();
 	void SetHP(int x);
+
 	int GetPOSx();
 	int GetPOSy();
 	void SetPOS(int x, int y);
-	string GetMonsterType();
-	void SetMonsterType(string x);
+
 	string GetMonsterName();
 	void SetMonsterName(string x);
 
-	int ATK;
+	void SpawnMonster(int i);
+
 	int HP;
 	int POS[2];
-	string TYPE;
 	string NAME;
 };

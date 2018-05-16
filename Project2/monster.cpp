@@ -9,16 +9,12 @@ monster::~monster() {
 	//cout << "\n\tDestroying a monster...";
 }
 
-void monster::attack() {
-	//cout << "\n\tMonster is attacking!";
-}
-
 void monster::DisplayStats() {
 	cout << "\n\n\t-------Monster Stats--------";
 	cout << "\n\tName: " << NAME;
 	cout << "\n\tHP: " << HP;
 	cout << "\n\tPosition: (" << POS[0] << ", " << POS[1] << ")";
-	cout << "\n\t----------------------------";
+	cout << "\n\t----------------------------" << endl;
 }
 
 int monster::GetHP() {
@@ -40,14 +36,6 @@ int monster::GetPOSy() {
 void monster::SetPOS(int x, int y) {
 	POS[0] = x;
 	POS[1] = y;
-}
-
-string monster::GetMonsterType() {
-	return TYPE;
-}
-
-void monster::SetMonsterType(string x) {
-	TYPE = x;
 }
 
 string monster::GetMonsterName() {

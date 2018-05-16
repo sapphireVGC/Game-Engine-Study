@@ -1,15 +1,12 @@
 #include "monster.h"
-#include "orc.h"
-#include "zombie.h"
 #include "player.h"
-#include "grid.h"
-#include <chrono>
-#include <thread>
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
-orc orcs[100];
+monster orcs[100];
+player p;
 
 int arrayxy[30][30];
 
@@ -28,8 +25,8 @@ void SpawnMonster(int i) {
 		checkPos = false;
 			
 		for (int ii = 0; ii < i; ii++) {
-			if (ranPosX == orcs[i].GetPOSx()) {
-				if (ranPosY == orcs[i].GetPOSy()) {
+			if (ranPosX == orcs[ii].GetPOSx()) {
+				if (ranPosY == orcs[ii].GetPOSy()) {
 					checkPos = true;
 
 					break;
@@ -41,24 +38,40 @@ void SpawnMonster(int i) {
 	orcs[i].SetMonsterName("Orc" + std::to_string(i));
 	orcs[i].SetHP(ranHP);
 	orcs[i].SetPOS(ranPosX, ranPosY);
-	orcs[i].DisplayStats();
 
 	arrayxy[ranPosX][ranPosY] = i;
 }
 
+void SpawnPlayer() {
+	int ranPosX = 0;
+	int ranPosY = 0;
+
+	ranPosX = rand() % 30;
+	ranPosY = rand() % 30;
+
+	p.SetPOS(ranPosX, ranPosY);
+	p.DisplayStats();
+}
+
 void PrintGrid() {
-	cout << "\n\nGrid\n" << endl;
+	cout << '\n';
 
 	for (int i = 0; i < 30; ++i)
 	{
 		for (int j = 0; j < 30; ++j)
 		{
-			if (arrayxy[i][j] == 0)
-				cout << "--  ";
-			else if (arrayxy[i][j] < 10)
-				cout << "0" << arrayxy[i][j] << "  ";
-			else
-				cout << arrayxy[i][j] << "  ";
+			if (i == p.GetPOSx() && j == p.GetPOSy()) {
+				if (arrayxy[i][j] > 0)
+					cout << "PM  ";
+				else
+					cout << "PP  ";
+			}
+			else {
+				if (arrayxy[i][j] == 0)
+					cout << "--  ";
+				else if (arrayxy[i][j] > 0)
+					cout << "MM  ";
+			}
 		}
 		cout << '\n';
 	}
@@ -66,28 +79,61 @@ void PrintGrid() {
 	cout << endl;
 }
 
-void Update() {
-	for (int i = 0; i < 100; i++) {
+void Attack() {
+	if (arrayxy[p.GetPOSx()][p.GetPOSy()] > 0) {
+		int i;
+		i = orcs[arrayxy[p.GetPOSx()][p.GetPOSy()]].GetHP();
+		i -= p.GetATK();
+
+		if (i <= 0) {
+			i = 0;
+			cout << "\n\n\tOrc" << arrayxy[p.GetPOSx()][p.GetPOSy()] << " is dead !!!";
+			arrayxy[p.GetPOSx()][p.GetPOSy()] = 0;
+		}
+		else {
+			orcs[arrayxy[p.GetPOSx()][p.GetPOSy()]].DisplayStats();
+			
+			int j;
+			j = p.GetHP();
+			j -= 2;
+			p.SetDATA(j);
+
+			if (j == 0) {
+				cout << "\n\n\tPlayer is dead !!!" << endl << endl;
+				Start();
+			}
+		}
+
+		orcs[arrayxy[p.GetPOSx()][p.GetPOSy()]].SetHP(i);
+	}
+	/*for (int i = 0; i < 100; i++) {
 		int hp = orcs[i].GetHP();
 		hp--;
 		orcs[i].SetHP(hp);
 		
-		cout << "\n\n\tOrc" << i << "'s HP is " << hp;
+		//cout << "\n\n\tOrc" << i << "'s HP is " << hp;
 
 		if (hp == 0) {
 			cout << "\n\n\tOrc" << i << " is dead !!!";
-			cout << "\n\tSpawning...";
 			
 			arrayxy[orcs[i].GetPOSx()][orcs[i].GetPOSy()] = 0;
-
-			SpawnMonster(i);
 		}
-	}
-
-	PrintGrid();
+	}*/
 }
 
-int main() {
+void Instruction() {
+	cout << "\t==============================" << endl;
+	cout << "\tKey Guide" << endl;
+	cout << "\t\tW = Move Up" << endl;
+	cout << "\t\tA = Move Left" << endl;
+	cout << "\t\tS = Move Down" << endl;
+	cout << "\t\tD = Move Right" << endl;
+	cout << "\t\tF = Attack" << endl;
+	cout << "\t==============================" << endl;
+	cout << "\tPlease choose the action...";
+}
+
+void Start() {
 	for (int i = 0; i < 30; ++i)
 	{
 		for (int j = 0; j < 30; ++j)
@@ -100,14 +146,41 @@ int main() {
 		SpawnMonster(i);
 	}
 
+	SpawnPlayer();
 	PrintGrid();
+	Instruction();
+}
 
-	std::chrono::seconds interval(10);
+int main() {
+	srand((unsigned int)time(NULL));
+	Start();
 	
 	while (true) {
-		std::this_thread::sleep_for(interval);
-		std::cout << "\n\n\ttick!" << std::flush;
-		Update();
+		int i;
+		int j;
+		char c;
+		cin >> c;
+		i = p.GetPOSx();
+		j = p.GetPOSy();
+
+		if (c == 'w')
+			if (i != 0)
+				i--;
+		if (c == 's')
+			if (i != 29)
+				i++;
+		if (c == 'a')
+			if (j != 0)
+				j--;
+		if (c == 'd')
+			if (j != 29)
+				j++;
+		if (c == 'f')
+			Attack();
+
+		p.SetPOS(i, j);
+		PrintGrid();
+		Instruction();
 	}
 
 	getchar();

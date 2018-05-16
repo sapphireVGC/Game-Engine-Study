@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class grid {
+class grid final {
 public:
 	grid();
 	~grid();
