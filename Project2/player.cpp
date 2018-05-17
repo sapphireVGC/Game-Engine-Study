@@ -11,9 +11,9 @@ player::~player(){
 
 void player::DisplayStats() {
 	cout << "\t-------Player Stats--------";
-	cout << "\n\tLV: " << LV;
 	cout << "\n\tHP: " << HP << " / " << maxHP;
 	cout << "\n\tATK: " << ATK;
+	cout << "\n\tPosition: (" << POS[0] << ", " << POS[1] << ")";
 	cout << "\n\t----------------------------" << endl;
 }
 
@@ -25,32 +25,8 @@ int player::GetATK() {
 	return ATK;
 }
 
-int player::GetLV() {
-	return LV;
-}
-
 void player::SetDATA(int x) {
-	if (maxHP == 0) 
-		maxHP = x;
-
 	HP = x;
-}
-
-void player::SetDATA(int x, int y) {
-	if (maxHP == 0)
-		maxHP = x;
-
-	HP = x;
-	ATK = y;
-}
-
-void player::SetDATA(int x, int y, int z) {
-	if (maxHP == 0)
-		maxHP = x;
-
-	HP = x;
-	ATK = y;
-	LV = z;
 }
 
 int player::GetPOSx() {
