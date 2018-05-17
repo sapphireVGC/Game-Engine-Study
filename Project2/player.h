@@ -16,6 +16,7 @@ public:
 	int GetPOSx();
 	int GetPOSy();
 	void SetPOS(int x, int y);
+	void SpawnPlayer();
 
 	int HP = 10;
 	const int maxHP = 10;

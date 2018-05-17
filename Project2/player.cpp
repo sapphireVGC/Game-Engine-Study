@@ -42,3 +42,12 @@ void player::SetPOS(int x, int y) {
 	POS[1] = y;
 }
 
+void player::SpawnPlayer() {
+	int ranPosX = 0;
+	int ranPosY = 0;
+	ranPosX = rand() % 30;
+	ranPosY = rand() % 30;
+	SetPOS(ranPosX, ranPosY);
+	DisplayStats();
+}
+
