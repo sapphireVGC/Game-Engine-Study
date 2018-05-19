@@ -99,11 +99,12 @@ void world::Attack() {
 			arrayxy[p.GetPOSx()][p.GetPOSy()] = 0;
 		}
 		else {
-			orcs[arrayxy[p.GetPOSx()][p.GetPOSy()]].DisplayStats();
 			int j;
 			j = p.GetHP();
 			j -= 2;
 			p.SetDATA(j);
+			p.DisplayStats();
+			orcs[arrayxy[p.GetPOSx()][p.GetPOSy()]].DisplayStats();
 			if (j == 0) {
 				cout << "\n\n\tPlayer is dead !!!" << endl << endl;
 				Start();
