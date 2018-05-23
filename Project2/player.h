@@ -19,8 +19,8 @@ public:
 	void SpawnPlayer();
 
 	int HP = 10;
-	const int maxHP = 10;
-	const int ATK = 5;
+	const int maxHP = 1000;
+	const int ATK = 50;
 	int POS[2];
 };
 

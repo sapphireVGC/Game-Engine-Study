@@ -1,12 +1,12 @@
 #pragma once
 #include "monster.h"
-class orc :
-	public monster
-{
+
+class orc : public monster {
 public:
 	orc();
-	~orc();
+	virtual ~orc();
 
-	void smash();
+	void SetType();
+	string GetType();
 };
 

@@ -1,11 +1,14 @@
 #pragma once
 #include "monster.h"
+#include "orc.h"
+#include "zombie.h"
 #include "player.h"
+#include "config.h"
 
-class world {
+class world final{
 public:
 	world();
-	virtual ~world();
+	~world();
 
 	void SpawnMonster(int i);
 	void PrintGrid();
@@ -14,8 +17,13 @@ public:
 	void Attack();
 	void GetInput();
 
-	monster orcs[100];
-	player p;
+	player *p = new player();
+	config *cf = new config();
+	orc **orcs = new orc*[100];
+	zombie **zombies = new zombie*[100];
 	int arrayxy[30][30];
+	const int orcSpwnPntX = 10;
+	const int zombieSpwnPntX = 20;
+	const int SpwnPntY = 15;
 };
 

@@ -1,12 +1,12 @@
 #pragma once
 #include "monster.h"
-class zombie :
-	public monster
-{
+
+class zombie : public monster {
 public:
 	zombie();
-	~zombie();
+	virtual ~zombie();
 
-	void bite();
+	void SetType();
+	string GetType();
 };
 

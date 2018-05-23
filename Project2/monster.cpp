@@ -12,7 +12,9 @@ monster::~monster() {
 void monster::DisplayStats() {
 	cout << "\n\n\t-------Monster Stats--------";
 	cout << "\n\tName: " << NAME;
-	cout << "\n\tHP: " << HP;
+	cout << "\n\tType: " << TYPE;
+	cout << "\n\tHp: " << HP;
+	cout << "\n\tAtk: " << ATK;
 	cout << "\n\tPosition: (" << POS[0] << ", " << POS[1] << ")";
 	cout << "\n\t----------------------------" << endl;
 }
@@ -23,6 +25,14 @@ int monster::GetHP() {
 
 void monster::SetHP(int x) {
 	HP = x;
+}
+
+int monster::GetATK() {
+	return ATK;
+}
+
+void monster::SetATK(int x) {
+	ATK = x;
 }
 
 int monster::GetPOSx() {

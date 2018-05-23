@@ -10,6 +10,17 @@ orc::~orc(){
 	//cout << "\n\tDestroying an Orc";
 }
 
-void orc::smash() {
-	cout << "\n\n\tOrc is smashing Player!\n";
+void orc::SetType() {
+	int ranType;
+	const string race = "Orc ";
+	ranType = rand() % 2;
+	if (ranType == 0)
+		TYPE = string("Warrior");
+	else
+		TYPE = string("Mage");
+	NAME = race + TYPE;
+}
+
+string orc::GetType() {
+	return TYPE;
 }
