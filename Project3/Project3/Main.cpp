@@ -8,7 +8,7 @@ int main() {
 	srand((unsigned int)time(NULL));
 	World* w = new World();
 	w->SpawnPlayer();
-	w->SpawnMonster(1);
+	w->SpawnMonster();
 	w->UpdateArray();
 	w->Draw();
 	w->Instruction();

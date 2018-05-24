@@ -14,11 +14,13 @@ public:
 	~World();
 
 	void SpawnPlayer();
-	void SpawnMonster(const int& i);
+	void SpawnMonster();
+	void Update();
 	void UpdateArray();
 	void Draw();
 	void Instruction();
 	void Status(const int& i, const int& j);
+	void Attack(const int& i, const int& j);
 	void GetInput();
 
 	Player* p = new Player();
