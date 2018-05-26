@@ -1,5 +1,7 @@
 #include "Player.h"
 
+using namespace std;
+
 Player::Player()
 {
 }
@@ -10,6 +12,8 @@ Player::~Player()
 
 void Player::Display() {
 	cout << "\t-------Player Stats--------";
+	cout << "\n\tHP: " << LV;
+	cout << "\n\tHP: " << EXP << " / 10";
 	cout << "\n\tHP: " << HP << " / " << maxHP;
 	cout << "\n\tATK: " << ATK;
 	cout << "\n\tPosition: (" << POS[0] << ", " << POS[1] << ")";
@@ -24,7 +28,7 @@ int Player::GetATK() {
 	return ATK;
 }
 
-void Player::SetHP(const int& x) {
+void Player::SetHP(const int x) {
 	HP = x;
 }
 
@@ -36,7 +40,20 @@ int Player::GetPOSY() {
 	return POS[1];
 }
 
-void Player::SetPOS(const int& x, const int& y) {
+void Player::SetPOS(const int x, const int y) {
 	POS[0] = x;
 	POS[1] = y;
+}
+
+void Player::UpdateEXP() {
+	EXP++;
+	if (EXP == 10) {
+		LV++;
+		float temp;
+		temp = maxHP * 1.2f;
+		maxHP = round(maxHP);
+		temp = ATK * 1.1f;
+		ATK = round(ATK);
+		EXP = 0;
+	}
 }

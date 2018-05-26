@@ -7,5 +7,8 @@ class Orc :
 public:
 	Orc();
 	~Orc();
+
+	Orc(const Orc& other) = default;
+	Orc& operator= (Orc& other) = default;
 };
 

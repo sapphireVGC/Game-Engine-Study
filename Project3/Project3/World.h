@@ -5,13 +5,14 @@
 #include "Zombie.h"
 #include "config.h"
 
-using namespace std;
-
 class World final
 {
 public:
 	World();
 	~World();
+
+	World(const World& other) = default;
+	World& operator= (World& other) = default;
 
 	void SpawnPlayer();
 	void SpawnMonster();
@@ -19,11 +20,11 @@ public:
 	void UpdateArray();
 	void Draw();
 	void Instruction();
-	void Status(const int& i, const int& j);
-	void Attack(const int& i, const int& j);
+	void Status(const int i, const int j);
+	void Attack(const int i, const int j);
 	void GetInput();
 
-	Player* p = new Player();
+	Player* p;
 	Orc* o[30];
 	Zombie* zb[30];
 	config* cf = new config();
@@ -31,5 +32,6 @@ public:
 	int orcCnt = 0;
 	int zombieCnt = 0;
 	int posArray[30][30];
+	const int gridSize = 30;
 };
 

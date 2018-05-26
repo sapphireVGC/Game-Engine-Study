@@ -1,5 +1,7 @@
 #include "Monster.h"
 
+using namespace std;
+
 Monster::Monster()
 {
 }
@@ -17,28 +19,21 @@ void Monster::Display() {
 	cout << "\n\t----------------------------" << endl;
 }
 
-void Monster::setHP(const int& i) {
+void Monster::setHP(const int i) {
 	HP = i;
 }
 
-void Monster::setATK(const int& i) {
+void Monster::setATK(const int i) {
 	ATK = i;
 }
 
-void Monster::setPOS(const int& i, const int& j) {
+void Monster::setPOS(const int i, const int j) {
 	POS[0] = i;
 	POS[1] = j;
 }
 
-void Monster::setNAME(const int& i) {
-	if (i == 0)
-		NAME.assign("Orc Warrior");
-	else if (i == 1)
-		NAME.assign("Orc Mage");
-	else if (i == 2)
-		NAME.assign("Rotten Zombie");
-	else
-		NAME.assign("Neo Zombie");
+void Monster::setNAME(const string& i) {
+	NAME = i;
 }
 
 int Monster::getHP() {

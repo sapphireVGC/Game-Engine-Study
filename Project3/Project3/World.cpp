@@ -1,5 +1,7 @@
 #include "World.h"
 
+using namespace std;
+
 World::World()
 {
 	for (int i = 0; i < 30; i++) {
@@ -9,6 +11,7 @@ World::World()
 			posArray[i][j] = 0;
 		}
 	}
+	cf->LoadConfig(1);
 }
 
 World::~World()
@@ -16,6 +19,7 @@ World::~World()
 }
 
 void World::SpawnPlayer() {
+	p = new Player();
 	const int i = p->maxHP;
 	p->SetHP(i);
 	p->SetPOS(15, 15);
@@ -24,35 +28,23 @@ void World::SpawnPlayer() {
 
 void World::SpawnMonster() {
 	int ran = 0;
-	ran = rand() % 2;
+	ran = rand() % cf->race_list.size();
 	if (ran == 0 && orcCnt < 30) {
-		ran = rand() % 2;
-		if (ran == 0) {
-			cf->Check("Orc", "Warrior");
-			o[orcCnt]->setNAME(0);
-		}
-		else {
-			cf->Check("Orc", "Mage");
-			o[orcCnt]->setNAME(1);
-		}
+		ran = rand() % cf->job_cnt.at(0);
+		cf->Check(0);
+		o[orcCnt]->setNAME(cf->getNAME());
 		o[orcCnt]->setHP(cf->getHP());
 		o[orcCnt]->setATK(cf->getATK());
 		o[orcCnt]->setPOS(15, 10);
 		orcCnt++;
 	}
-	else if (zombieCnt < 30) {
-		ran = rand() % 2;
-		if (ran == 0) {
-			cf->Check("Zombie", "Rotten");
-			zb[zombieCnt]->setNAME(2);
-		}
-		else {
-			cf->Check("Zombie", "Neo");
-			zb[zombieCnt]->setNAME(3);
-		}
-		zb[zombieCnt]->setHP(cf->getHP());
-		zb[zombieCnt]->setATK(cf->getATK());
-		zb[zombieCnt]->setPOS(15, 20);
+	else if (ran == 1 && zombieCnt < 30) {
+		ran = rand() % cf->job_cnt.at(1);
+		cf->Check(1);
+		zb[orcCnt]->setNAME(cf->getNAME());
+		zb[orcCnt]->setHP(cf->getHP());
+		zb[orcCnt]->setATK(cf->getATK());
+		zb[orcCnt]->setPOS(15, 20);
 		zombieCnt++;
 	}
 }
@@ -118,9 +110,9 @@ void World::Update() {
 }
 
 void World::UpdateArray() {
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < gridSize; i++) //variable
 	{
-		for (int j = 0; j < 30; j++)
+		for (int j = 0; j < gridSize; j++)
 		{
 			posArray[i][j] = 0;
 			for (int k = 0; k < orcCnt; k++) {
@@ -171,7 +163,7 @@ void World::Instruction() {
 	cout << "\tPlease choose the action...";
 }
 
-void World::Status(const int& i, const int& j) {
+void World::Status(const int i, const int j) {
 	p->Display();
 	for (int k = 0; k < orcCnt; k++) {
 		if (i == o[k]->getPOSX() && j == o[k]->getPOSY())
@@ -183,7 +175,7 @@ void World::Status(const int& i, const int& j) {
 	}
 }
 
-void World::Attack(const int& i, const int& j) {
+void World::Attack(const int i, const int j) {
 	int pHp = p->GetHP();
 	int mHp = 0;
 	for (int k = 0; k < orcCnt; k++) {
@@ -195,8 +187,11 @@ void World::Attack(const int& i, const int& j) {
 				for (int l = k + 1; l < orcCnt; l++) {
 					o[l - 1] = o[l];
 				}
+				delete o[orcCnt];
+				o[orcCnt] = NULL;
 				o[orcCnt] = new Orc();
 				orcCnt--;
+				p->UpdateEXP();
 			}
 			else {
 				pHp -= o[k]->getATK();
@@ -213,8 +208,11 @@ void World::Attack(const int& i, const int& j) {
 				for (int l = k + 1; l < zombieCnt; l++) {
 					zb[l - 1] = zb[l];
 				}
+				delete zb[zombieCnt];
+				zb[zombieCnt] = NULL;
 				zb[zombieCnt] = new Zombie();
 				zombieCnt--;
+				p->UpdateEXP();
 			}
 			else {
 				pHp -= zb[k]->getATK();
@@ -222,7 +220,14 @@ void World::Attack(const int& i, const int& j) {
 			zb[k]->setHP(mHp);
 		}
 	}
-	p->SetHP(pHp);
+	if (p < 0) {
+		delete p;
+		p = NULL;
+		SpawnPlayer();
+	}
+	else {
+		p->SetHP(pHp);
+	}
 }
 
 void World::GetInput() {

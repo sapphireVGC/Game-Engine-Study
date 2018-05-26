@@ -1,4 +1,6 @@
 Orc,Warrior,100,10
 Orc,Mage,50,25
+Orc,Lord,500,100
+Orc,King,5000,100
 Zombie,Rotten,100,10
 Zombie,Neo,250,20

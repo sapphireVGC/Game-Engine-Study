@@ -1,3 +1,4 @@
-﻿  World.cpp
+﻿  config.cpp
+d:\visual studio 2017\projects\project3\project3\config.cpp(45): warning C4018: '<': signed/unsigned mismatch
   Project3.vcxproj -> d:\Visual Studio 2017\Projects\Project3\Debug\Project3.exe
   Project3.vcxproj -> d:\Visual Studio 2017\Projects\Project3\Debug\Project3.pdb (Partial PDB)

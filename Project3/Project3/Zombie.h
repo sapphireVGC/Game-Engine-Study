@@ -7,5 +7,8 @@ class Zombie :
 public:
 	Zombie();
 	~Zombie();
+
+	Zombie(const Zombie& other) = default;
+	Zombie& operator= (Zombie& other) = default;
 };
 
