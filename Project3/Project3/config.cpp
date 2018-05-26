@@ -71,7 +71,10 @@ void config::SplitString(const string& s) {
 	}
 	if (detail[0] == race_list.at(race)) {
 		if (randCnt == job) {
-			readNAME = detail[0] + detail[1];
+			if (detail[0] == "Orc")
+				readNAME = detail[0] + " " + detail[1];
+			else if (detail[0] == "Zombie")
+				readNAME = detail[1] + " " + detail[0];
 			readHP = stoi(detail[2]);
 			readATK = stoi(detail[3]);
 		}

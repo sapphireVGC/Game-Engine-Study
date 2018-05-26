@@ -12,8 +12,8 @@ Player::~Player()
 
 void Player::Display() {
 	cout << "\t-------Player Stats--------";
-	cout << "\n\tHP: " << LV;
-	cout << "\n\tHP: " << EXP << " / 10";
+	cout << "\n\tLV: " << LV;
+	cout << "\n\tEXP: " << EXP << " / 5";
 	cout << "\n\tHP: " << HP << " / " << maxHP;
 	cout << "\n\tATK: " << ATK;
 	cout << "\n\tPosition: (" << POS[0] << ", " << POS[1] << ")";
@@ -47,13 +47,11 @@ void Player::SetPOS(const int x, const int y) {
 
 void Player::UpdateEXP() {
 	EXP++;
-	if (EXP == 10) {
+	if (EXP == 5) {
 		LV++;
-		float temp;
-		temp = maxHP * 1.2f;
-		maxHP = round(maxHP);
-		temp = ATK * 1.1f;
-		ATK = round(ATK);
+		maxHP += 250;
+		HP = maxHP;
+		ATK += 25;
 		EXP = 0;
 	}
 }

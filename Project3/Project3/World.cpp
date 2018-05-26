@@ -28,7 +28,7 @@ void World::SpawnPlayer() {
 
 void World::SpawnMonster() {
 	int ran = 0;
-	ran = rand() % cf->race_list.size();
+	ran = rand() % 2;
 	if (ran == 0 && orcCnt < 30) {
 		ran = rand() % cf->job_cnt.at(0);
 		cf->Check(0);
@@ -182,7 +182,7 @@ void World::Attack(const int i, const int j) {
 		if (i == o[k]->getPOSX() && j == o[k]->getPOSY()) {
 			mHp = o[k]->getHP();
 			mHp -= p->GetATK();
-			if (mHp < 0) {
+			if (mHp <= 0) {
 				cout << "\n\t" << o[k]->getNAME() << "is Dead !!" << endl;
 				for (int l = k + 1; l < orcCnt; l++) {
 					o[l - 1] = o[l];
@@ -192,6 +192,8 @@ void World::Attack(const int i, const int j) {
 				o[orcCnt] = new Orc();
 				orcCnt--;
 				p->UpdateEXP();
+				if (pHp != p->GetHP())
+					pHp = p->GetHP();
 			}
 			else {
 				pHp -= o[k]->getATK();
@@ -203,7 +205,7 @@ void World::Attack(const int i, const int j) {
 		if (i == zb[k]->getPOSX() && j == zb[k]->getPOSY()) {
 			mHp = zb[k]->getHP();
 			mHp -= p->GetATK();
-			if (mHp < 0) {
+			if (mHp <= 0) {
 				cout << "\n\t" << zb[k]->getNAME() << "is Dead !!" << endl;
 				for (int l = k + 1; l < zombieCnt; l++) {
 					zb[l - 1] = zb[l];
@@ -213,6 +215,8 @@ void World::Attack(const int i, const int j) {
 				zb[zombieCnt] = new Zombie();
 				zombieCnt--;
 				p->UpdateEXP();
+				if (pHp != p->GetHP())
+					pHp = p->GetHP();
 			}
 			else {
 				pHp -= zb[k]->getATK();
@@ -220,10 +224,14 @@ void World::Attack(const int i, const int j) {
 			zb[k]->setHP(mHp);
 		}
 	}
-	if (p < 0) {
+	if (p <= 0) {
 		delete p;
 		p = NULL;
+		cout << "\n\tPlayer is Dead !!" << endl;
 		SpawnPlayer();
+		UpdateArray();
+		Draw();
+		Instruction();
 	}
 	else {
 		p->SetHP(pHp);
