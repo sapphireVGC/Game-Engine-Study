@@ -22,6 +22,7 @@ public:
 	void Instruction();
 	void Status(const int i, const int j);
 	void Attack(const int i, const int j);
+	void Ultimate();
 	void GetInput();
 
 	Player* p;

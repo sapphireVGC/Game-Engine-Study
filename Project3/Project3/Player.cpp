@@ -45,6 +45,18 @@ void Player::SetPOS(const int x, const int y) {
 	POS[1] = y;
 }
 
+void Player::SetLV() {
+	LV = 1;
+	maxHP = 1000;
+	if (HP > maxHP)
+		HP = maxHP;
+	ATK = 50;
+}
+
+int Player::GetLV() {
+	return LV;
+}
+
 void Player::UpdateEXP() {
 	EXP++;
 	if (EXP == 5) {

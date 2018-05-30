@@ -13,11 +13,13 @@ public:
 	void Display();
 	void SetHP(const int x);
 	void SetPOS(const int x, const int y);
+	void SetLV();
 	void UpdateEXP();
 	int GetHP();
 	int GetATK();
 	int GetPOSX();
 	int GetPOSY();
+	int GetLV();
 	
 	int HP;
 	int POS[2];
