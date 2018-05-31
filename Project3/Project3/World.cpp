@@ -23,7 +23,6 @@ void World::SpawnPlayer() {
 	const int i = p->maxHP;
 	p->SetHP(i);
 	p->SetPOS(15, 15);
-	p->Display();
 }
 
 void World::SpawnMonster() {
@@ -56,11 +55,8 @@ void World::Update() {
 	int y = 0;
 	for (int i = 0; i < orcCnt; i++) {
 		if (o[i]->getPOSX() != p->GetPOSX() || o[i]->getPOSY() != p->GetPOSY()) {
-			int hp = o[i]->getHP();
 			int atk = o[i]->getATK();
-			hp += 5;
 			atk += 5;
-			o[i]->setHP(hp);
 			o[i]->setATK(atk);
 			ran = rand() % 6;
 			x = o[i]->getPOSX();
@@ -139,6 +135,7 @@ void World::Draw() {
 	cout << '\n';
 	for (int i = 0; i < gridSize; ++i)
 	{
+		cout << '\t';
 		for (int j = 0; j < gridSize; ++j)
 		{
 			if (posArray[i][j] == 0)
