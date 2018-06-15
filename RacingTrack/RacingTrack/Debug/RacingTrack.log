@@ -1,0 +1,6 @@
+﻿  World.cpp
+d:\visual studio 2017\projects\racingtrack\racingtrack\world.cpp(21): warning C4018: '<': signed/unsigned mismatch
+d:\visual studio 2017\projects\racingtrack\racingtrack\world.cpp(39): warning C4018: '<': signed/unsigned mismatch
+d:\visual studio 2017\projects\racingtrack\racingtrack\world.cpp(127): warning C4018: '<': signed/unsigned mismatch
+  RacingTrack.vcxproj -> D:\Visual Studio 2017\Projects\RacingTrack\Debug\RacingTrack.exe
+  RacingTrack.vcxproj -> D:\Visual Studio 2017\Projects\RacingTrack\Debug\RacingTrack.pdb (Partial PDB)
