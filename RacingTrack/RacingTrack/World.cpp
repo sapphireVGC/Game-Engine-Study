@@ -17,9 +17,15 @@ void World::InitMap() {
 	cin >> s;
 	i = stoi(s);
 	cf->LoadConfig(i);
+	system("CLS");
 	cout << endl << "\t";
 	for (int i = 0; i < cf->mapVec.size(); i++) {
-		cout << cf->ReadMap(i) << cf->ReadMap(i) << " ";
+		if (cf->ReadMap(i) == 0) {
+			cout << cf->ReadMap(i) << cf->ReadMap(i) << " ";
+		}
+		else {
+			cout << "   ";
+		}
 		if (i % mapSize == mapSize - 1) {
 			cout << endl << "\t";
 		}
@@ -37,28 +43,32 @@ void World::Instruction() {
 void World::WriteMap() {
 	cout << endl << "\t";
 	for (int i = 0; i < cf->mapVec.size(); i++) {
-		for (int j = 0; j < carCnt; j++) {
-			if (carCnt == 2) {
-				if (i == car[0]->GetPos() && i == car[1]->GetPos()) {
-					cout << car[0]->GetSYMBOL() << car[1]->GetSYMBOL() << " ";
-				}
-				else if (i == car[0]->GetPos()) {
-					cout << car[0]->GetSYMBOL() << cf->ReadMap(i) << " ";
-				}
-				else if (i == car[1]->GetPos()) {
-					cout << cf->ReadMap(i) << car[1]->GetSYMBOL() << " ";
-				}
-				else {
-					cout << cf->ReadMap(i) << cf->ReadMap(i) << " ";
-				}
+		if (carCnt == 2) {
+			if (i == car[0]->GetPos() && i == car[1]->GetPos()) {
+				cout << car[0]->GetSYMBOL() << car[1]->GetSYMBOL() << " ";
 			}
-			else if (carCnt == 1) {
-				if (i == car[0]->GetPos()) {
-					cout << car[0]->GetSYMBOL() << cf->ReadMap(i) << " ";
-				}
-				else {
-					cout << cf->ReadMap(i) << cf->ReadMap(i) << " ";
-				}
+			else if (i == car[0]->GetPos()) {
+				cout << car[0]->GetSYMBOL() << "  ";
+			}
+			else if (i == car[1]->GetPos()) {
+				cout << " " << car[1]->GetSYMBOL() << " ";
+			}
+			else if (cf->ReadMap(i) == 0) {
+				cout << cf->ReadMap(i) << cf->ReadMap(i) << " ";
+			}
+			else {
+				cout << "   ";
+			}
+		}
+		else if (carCnt == 1) {
+			if (i == car[0]->GetPos()) {
+				cout << car[0]->GetSYMBOL() << "  ";
+			}
+			else if (cf->ReadMap(i) == 0) {
+				cout << cf->ReadMap(i) << cf->ReadMap(i) << " ";
+			}
+			else {
+				cout << "   ";
 			}
 		}
 		if (i % mapSize == mapSize - 1) {
@@ -67,7 +77,18 @@ void World::WriteMap() {
 	}
 	if (carCnt < 2) {
 		Instruction();
-		//GetInput();
+		if (_kbhit()) {
+			input = static_cast<char>(_getch());
+			if (input == 'a') {
+				SpawnCar("Benz");
+			}
+			else if (input == 's') {
+				SpawnCar("BMW");
+			}
+			else if (input == 'd') {
+				SpawnCar("Honda");
+			}
+		}
 	}
 }
 
@@ -80,21 +101,22 @@ void World::UpdateMap() {
 		system("CLS");
 		for (int i = 0; i < carCnt; i++) {
 			int carP = car[i]->GetPos();
-			if (cf->ReadMap(carP + 1) == 1 && carP + 1 != startPnt) {
+			int carPP = car[i]->GetPastPos();
+			if (cf->ReadMap(carP + 1) == 1 && carP + 1 != carPP) {
 				car[i]->SetPos(carP + 1);
 			}
-			else if (cf->ReadMap(carP + mapSize) == 1 && carP + mapSize != startPnt) {
+			else if (cf->ReadMap(carP + mapSize) == 1 && carP + mapSize != carPP) {
 				car[i]->SetPos(carP + mapSize);
 			}
-			else if (cf->ReadMap(carP - 1) == 1 && carP - 1 != startPnt) {
+			else if (cf->ReadMap(carP - 1) == 1 && carP - 1 != carPP) {
 				car[i]->SetPos(carP - 1);
 			}
-			else if (cf->ReadMap(carP - mapSize) == 1 && carP - mapSize != startPnt) {
+			else if (cf->ReadMap(carP - mapSize) == 1 && carP - mapSize != carPP) {
 				car[i]->SetPos(carP - mapSize);
 			}
-			startPnt = carP;
+			car[i]->SetPastPos(carP);
 			int carF = car[i]->GetFUEL();
-			carF = carF - 10;
+			carF = carF - fuelCost;
 			car[i]->SetDATA(carF); 
 			if (carF <= 0) {
 				for (int l = i + 1; l < carCnt; l++) {
@@ -106,9 +128,9 @@ void World::UpdateMap() {
 				carCnt--;
 				haveCar = false;
 			}
-			else {
-				WriteMap();
-			}
+		}
+		if (carCnt > 0) {
+			WriteMap();
 		}
 	}
 	cf->mapVec.clear();
@@ -128,6 +150,7 @@ void World::SpawnCar(const string& s) {
 		if (cf->ReadMap(i) == 1) {
 			startPnt = i;
 			car[carCnt]->SetPos(i);
+			car[carCnt]->SetPastPos(i);
 			break;
 		}
 	}

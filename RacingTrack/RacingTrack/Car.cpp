@@ -24,6 +24,10 @@ void Car::SetPos(const int i) {
 	pos = i;
 }
 
+void Car::SetPastPos(const int i) {
+	pastPos = i;
+}
+
 string Car::GetNAME() {
 	return name;
 }
@@ -34,6 +38,10 @@ int Car::GetFUEL() {
 
 int Car::GetPos() {
 	return pos;
+}
+
+int Car::GetPastPos() {
+	return pastPos;
 }
 
 char Car::GetSYMBOL() {

@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <chrono>
 #include <thread>
+#include <conio.h>
 #include "Config.h"
 #include "Car.h"
 
@@ -28,5 +29,7 @@ public:
 	int carCnt = 0;
 	int startPnt = 0;
 	const int timeDelay = 1;
+	const int fuelCost = 2;
+	char input = 0;
 };
 
