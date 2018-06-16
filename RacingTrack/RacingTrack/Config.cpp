@@ -12,12 +12,10 @@ Config::~Config() {
 
 void Config::LoadConfig(const int i) {
 	string dir;
-	if (i == 0)
+	if (i != 0)
+		dir = "map" + to_string(i) + ".txt";
+	else
 		dir = carCf;
-	else if (i == 1)
-		dir = map1Cf;
-	else if (i == 2)
-		dir = map2Cf;
 	ifstream myFile(dir);
 	if (myFile.is_open()) {
 		while (getline(myFile, line)) {

@@ -24,8 +24,6 @@ public:
 	std::string carTemp[3];
 	std::string target;
 	const std::string carCf = "car.txt";
-	const std::string map1Cf = "map1.txt";
-	const std::string map2Cf = "map2.txt";
 	std::vector<int> mapVec;
 };
 
