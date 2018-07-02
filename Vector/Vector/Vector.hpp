@@ -149,7 +149,7 @@ namespace jrw {
 
 	template <class T>
 	bool Vector<T>::operator==(const Vector<T>& other) const {
-		return ((this->x == other.x) && (this->y == other.y));
+		return (this->x == other.x && this->y == other.y);
 	}
 
 	template <class T>

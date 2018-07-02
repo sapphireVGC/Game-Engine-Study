@@ -97,7 +97,7 @@ namespace jrw {
 	Vector3i<T>& Vector3i<T>::times(const T& scale) {
 		x *= scale;
 		y *= scale;
-		z -= scale;
+		z *= scale;
 
 		return *this;
 	}
@@ -161,12 +161,14 @@ namespace jrw {
 
 	template <class T>
 	bool Vector3i<T>::operator==(const Vector3i<T>& other) const {
-		return ((this->x == other.x) && (this->y == other.y) && this->z == other.z);
+		return (this->x == other.x && 
+			this->y == other.y && 
+			this->z == other.z);
 	}
 
 	template <class T>
 	T Vector3i<T>::dot(const Vector3i<T>& other) {
-		return ((this->x * other.x) + (this->y * other.y) + (this->z * other.z));
+		return (this->x * other.x + this->y * other.y + this->z * other.z);
 	}
 
 	template <class T>
